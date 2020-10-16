@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder.AppleTV.Storyboard" version="3.0" toolsVersion="17156" targetRuntime="AppleTV" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="appleTV" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="tvOSTestApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="94" translatesAutoresizingMaskIntoConstraints="NO" id="AYK-tm-Uvi">
+                                <rect key="frame" x="517" y="317" width="887" height="446"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="75" translatesAutoresizingMaskIntoConstraints="NO" id="nuo-Lx-eGE">
+                                        <rect key="frame" x="0.0" y="0.0" width="887" height="86"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="218-g1-bP0">
+                                                <rect key="frame" x="0.0" y="0.0" width="406" height="86"/>
+                                                <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
+                                                <state key="normal" title="Set User Prop">
+                                                    <color key="titleShadowColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="setSetUserPropertyClick" destination="BYZ-38-t0r" eventType="primaryActionTriggered" id="hR1-x4-TYY"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QH0-3v-C9Y">
+                                                <rect key="frame" x="481" y="0.0" width="406" height="86"/>
+                                                <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
+                                                <state key="normal" title="Clear User Prop"/>
+                                                <connections>
+                                                    <action selector="clearUserPropertyClick:" destination="BYZ-38-t0r" eventType="primaryActionTriggered" id="Lvc-5Y-3aF"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstItem="QH0-3v-C9Y" firstAttribute="width" secondItem="218-g1-bP0" secondAttribute="width" id="HH8-76-cpy"/>
+                                        </constraints>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="75" translatesAutoresizingMaskIntoConstraints="NO" id="VQj-O1-7Gx">
+                                        <rect key="frame" x="0.0" y="180" width="887" height="86"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Yw-85-TK4">
+                                                <rect key="frame" x="0.0" y="0.0" width="406" height="86"/>
+                                                <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
+                                                <state key="normal" title="Sign In"/>
+                                                <connections>
+                                                    <action selector="signInClick:" destination="BYZ-38-t0r" eventType="primaryActionTriggered" id="l3G-Fj-An0"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LlI-mu-uB8">
+                                                <rect key="frame" x="481" y="0.0" width="406" height="86"/>
+                                                <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
+                                                <state key="normal" title="Sign Out"/>
+                                                <connections>
+                                                    <action selector="signOutClick:" destination="BYZ-38-t0r" eventType="primaryActionTriggered" id="0vt-mP-j7F"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstItem="LlI-mu-uB8" firstAttribute="width" secondItem="2Yw-85-TK4" secondAttribute="width" id="lic-ac-DQt"/>
+                                        </constraints>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MCH-hR-tZM">
+                                        <rect key="frame" x="0.0" y="360" width="887" height="86"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L9f-N8-cK6">
+                                                <rect key="frame" x="0.0" y="0.0" width="887" height="86"/>
+                                                <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
+                                                <state key="normal" title="Log Event"/>
+                                                <connections>
+                                                    <action selector="logEventClick:" destination="BYZ-38-t0r" eventType="primaryActionTriggered" id="IjF-iF-Gg7"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                            </stackView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="adswerve_logo" translatesAutoresizingMaskIntoConstraints="NO" id="DEU-ts-Tsz">
+                                <rect key="frame" x="1547" y="827" width="310" height="185"/>
+                            </imageView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="wu6-TO-1qx"/>
+                        <color key="backgroundColor" red="0.35553607339999999" green="0.50059080119999999" blue="0.59653872249999995" alpha="0.32223811619718312" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="wu6-TO-1qx" firstAttribute="trailing" secondItem="AYK-tm-Uvi" secondAttribute="trailing" constant="436" id="Fi6-gN-JJ2"/>
+                            <constraint firstItem="AYK-tm-Uvi" firstAttribute="leading" secondItem="wu6-TO-1qx" secondAttribute="leading" constant="437" id="SM6-lW-ucK"/>
+                            <constraint firstItem="DEU-ts-Tsz" firstAttribute="leading" secondItem="wu6-TO-1qx" secondAttribute="leading" constant="1467" id="Uac-hi-PRB"/>
+                            <constraint firstItem="AYK-tm-Uvi" firstAttribute="top" secondItem="wu6-TO-1qx" secondAttribute="top" constant="257" id="Xnj-pn-JNO"/>
+                            <constraint firstItem="wu6-TO-1qx" firstAttribute="bottom" secondItem="AYK-tm-Uvi" secondAttribute="bottom" constant="257" id="XwF-YL-fmN"/>
+                            <constraint firstItem="DEU-ts-Tsz" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="767" id="aC3-LU-EXM"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="DEU-ts-Tsz" secondAttribute="bottom" constant="8" id="iyO-d1-oOC"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="175" y="-39"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="adswerve_logo" width="310" height="135"/>
+    </resources>
+</document>

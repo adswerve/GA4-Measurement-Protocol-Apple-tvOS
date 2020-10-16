@@ -1,0 +1,21 @@
+{
+  "images" : [
+    {
+      "filename" : "AdSwerve_Logo_Primary_Border_FullColor_PMS_310x185.png",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "idiom" : "universal",
+      "scale" : "3x"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
