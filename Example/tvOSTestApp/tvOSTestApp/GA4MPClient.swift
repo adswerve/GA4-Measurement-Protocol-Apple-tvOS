@@ -91,7 +91,7 @@ class GA4MPClient {
     var throwOnValidationErrorsInDebug = false
     /// Set true to send events to GA's validation server and log responses. Default is false.
     var useValidationEndpoint = false
-
+    
     // MARK: - Private properties
     
     /// Measurement Protocol versions supported.
@@ -354,7 +354,7 @@ class GA4MPClient {
             print(message)
         }
     }
-        
+    
     // MARK: - Private methods: Networking
     
     /// Handles the HTTP request to upload the event (and other data) to the configured endpoint.
@@ -581,25 +581,24 @@ class GA4MPClient {
     ///   - name: The name of the event
     ///   - parameters: The dictionary of event parameters.
     private func validateEvent(_ name: String, parameters: [String : Any]?) {
-        if (debugMode) {
-            // validate event name
-            let isInvalidName = validationRegexEventName?.numberOfMatches(in: name, range: NSMakeRange(0, name.count)) != 1
-            if (isInvalidName) {
-                let errorMessage = String(format: "Invalid event name '%@'", name)
+        guard debugMode else {return}
+        // validate event name
+        let isInvalidName = validationRegexEventName?.numberOfMatches(in: name, range: NSMakeRange(0, name.count)) != 1
+        if (isInvalidName) {
+            let errorMessage = String(format: "Invalid event name '%@'", name)
+            handleValidationError(errorMessage)
+        }
+        // validate parameter count
+        if (nil != parameters) {
+            let parameterCount = parameters!.count
+            let isInvalidCount = parameterCount > validationRuleEventMaxParameters
+            if (isInvalidCount) {
+                let errorMessage = String(format: "Too many parameters in event '%@': contains %ld, max %ld", name, parameterCount, validationRuleEventMaxParameters)
                 handleValidationError(errorMessage)
             }
-            // validate parameter count
-            if (nil != parameters) {
-                let parameterCount = parameters!.count
-                let isInvalidCount = parameterCount > validationRuleEventMaxParameters
-                if (isInvalidCount) {
-                    let errorMessage = String(format: "Too many parameters in event '%@': contains %ld, max %ld", name, parameterCount, validationRuleEventMaxParameters)
-                    handleValidationError(errorMessage)
-                }
-            }
-            // validate parameters
-            validateParameters(source: name, parameters: parameters)
         }
+        // validate parameters
+        validateParameters(source: name, parameters: parameters)
     }
     
     /// Checks each event parameter name and value against the GA4 rules when debugMode is enabled.
@@ -608,21 +607,20 @@ class GA4MPClient {
     ///   - source: Source of event parameters (either event name or default event parameters).
     ///   - parameters: The dictionary of event parameters.
     private func validateParameters(source: String, parameters: [String : Any]?) {
-        if (debugMode && nil != parameters) {
-            for (name, value) in parameters! {
-                // validate parameter name
-                let isInvalidName = validationRegexParameterName?.numberOfMatches(in: name, range: NSMakeRange(0, name.count)) != 1
-                if (isInvalidName) {
-                    let errorMessage = String(format: "Invalid parameter name '%@' in '%@'", name, source)
+        guard debugMode && nil != parameters else {return}
+        for (name, value) in parameters! {
+            // validate parameter name
+            let isInvalidName = validationRegexParameterName?.numberOfMatches(in: name, range: NSMakeRange(0, name.count)) != 1
+            if (isInvalidName) {
+                let errorMessage = String(format: "Invalid parameter name '%@' in '%@'", name, source)
+                handleValidationError(errorMessage)
+            }
+            // validate parameter value
+            if let stringValue = value as? String {
+                let isInvalidValue = stringValue.count > validationRuleParameterValueMaxLength
+                if (isInvalidValue) {
+                    let errorMessage = String(format: "Value too long for parameter '%@' in '%@': %@", name, source, stringValue)
                     handleValidationError(errorMessage)
-                }
-                // validate parameter value
-                if let stringValue = value as? String {
-                    let isInvalidValue = stringValue.count > validationRuleParameterValueMaxLength
-                    if (isInvalidValue) {
-                        let errorMessage = String(format: "Value too long for parameter '%@' in '%@': %@", name, source, stringValue)
-                        handleValidationError(errorMessage)
-                    }
                 }
             }
         }
@@ -636,30 +634,29 @@ class GA4MPClient {
     ///   - value: The value of the user property.
     ///   - name: The name of the user property.
     private func validateUserProperty(_ value: String?, forName name: String) {
-        if (debugMode) {
-            // validate user property name
-            let isInvalidName = validationRegexUserPropertyName?.numberOfMatches(in: name, range: NSMakeRange(0, name.count)) != 1
-            if (isInvalidName) {
-                let errorMessage = String(format: "Invalid user property name '%@'", name)
+        guard debugMode else {return}
+        // validate user property name
+        let isInvalidName = validationRegexUserPropertyName?.numberOfMatches(in: name, range: NSMakeRange(0, name.count)) != 1
+        if (isInvalidName) {
+            let errorMessage = String(format: "Invalid user property name '%@'", name)
+            handleValidationError(errorMessage)
+        }
+        // validate user property value
+        if (nil != value) {
+            let isInvalidValue = value!.count > validationRuleUserPropertyNameMaxLength
+            if (isInvalidValue) {
+                let errorMessage = String(format: "Value too long for user property '%@': %@", name, value!)
                 handleValidationError(errorMessage)
             }
-            // validate user property value
-            if (nil != value) {
-                let isInvalidValue = value!.count > validationRuleUserPropertyNameMaxLength
-                if (isInvalidValue) {
-                    let errorMessage = String(format: "Value too long for user property '%@': %@", name, value!)
-                    handleValidationError(errorMessage)
-                }
+        }
+        // validate current count
+        if let currentProperties = userProperties {
+            if (currentProperties.count > validationRuleUserPropertyMaxCount) {
+                let errorMessage = String(format: "Too many user properties: last, set, max: %@, %ld, %ld", name,
+                                          currentProperties.count, validationRuleUserPropertyMaxCount)
+                handleValidationError(errorMessage)
             }
-            // validate current count
-            if let currentProperties = userProperties {
-                if (currentProperties.count > validationRuleUserPropertyMaxCount) {
-                    let errorMessage = String(format: "Too many user properties: last, set, max: %@, %ld, %ld", name,
-                                              currentProperties.count, validationRuleUserPropertyMaxCount)
-                    handleValidationError(errorMessage)
-                }
-                
-            }
+            
         }
     }
     
@@ -667,12 +664,11 @@ class GA4MPClient {
     ///
     /// - Parameter userID: The value of the user ID.
     private func validateUserID(_ userID: String?) {
-        if (debugMode && nil != userID) {
-            let isInvalidValue = userID!.count > validationRuleUserIDValueMaxLength
-            if (isInvalidValue) {
-                let errorMessage = String(format: "User ID is too long: %@", userID!)
-                handleValidationError(errorMessage)
-            }
+        guard debugMode && nil != userID else {return}
+        let isInvalidValue = userID!.count > validationRuleUserIDValueMaxLength
+        if (isInvalidValue) {
+            let errorMessage = String(format: "User ID is too long: %@", userID!)
+            handleValidationError(errorMessage)
         }
     }
     
